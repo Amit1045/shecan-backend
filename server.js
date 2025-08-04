@@ -15,7 +15,13 @@ app.get("/api", (req, res) => {
     if (err) {
       return res.status(500).json({ error: "Unable to read data." });
     }
-    res.json(JSON.parse(data));
+    try {
+      const parsed = JSON.parse(data);
+      res.json(parsed);
+     
+    } catch (err) {
+      res.status(500).json({ error: "Invalid JSON format in file." });
+    }
   });
 });
 
